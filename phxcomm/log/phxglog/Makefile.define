@@ -23,7 +23,7 @@ PHXGLOG_OBJ=phx_glog.o
 
 PHXGLOG_LIB=phxglog include:phxcomm_include
 
-PHXGLOG_SYS_LIB=$(GLOG_LIB_PATH)/libglog.a -lpthread
+PHXGLOG_SYS_LIB=$(GLOG_LIB_PATH)/libglog.a $(GFLAGS_LIB_PATH)/libgflags.a -lpthread
 
 PHXGLOG_INCS=$(SRC_BASE_PATH)/phxcomm/log/phxglog  
 

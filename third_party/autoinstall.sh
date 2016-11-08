@@ -46,6 +46,114 @@ function check_lib_exist()
     return $?
 }
 
+function install_cmake()
+{
+	lib_name="cmake";
+	check_dir_exist $lib_name;
+
+	go_back;
+	cd $lib_name;
+	./bootstrap;
+	if [ $? -ne 0 ]; then
+		perror "$lib_name bootstrap fail. please check compile error info."
+		exit;
+	fi
+
+	make;
+	if [ $? -ne 0 ]; then
+		perror "$lib_name make fail. please check compile error info."
+		exit;
+	fi
+
+	make install;
+	if [ $? -ne 0 ]; then
+		perror "$lib_name install fail. please check compile error info."
+		exit;
+	fi
+
+	psucc "install $lib_name ok."
+}
+
+function install_gflags()
+{
+	lib_name="gflags";
+	check_dir_exist $lib_name;
+
+    # check if aready install.
+    check_lib_exist $lib_name;
+    if [ $? -eq 0 ]; then
+        psucc "$lib_name already installed."
+        return;
+    fi
+    # end check.
+
+    go_back;
+    cd $lib_name;
+	cmake -D CMAKE_INSTALL_PREFIX=$(pwd) CMakeLists.txt;
+
+	make;
+	if [ $? -ne 0 ]; then
+		perror "$lib_name make fail. please check compile error info."
+		exit;
+	fi
+
+    check_lib_exist $lib_name;
+    if [ $? -eq 1 ]; then
+        perror "$lib_name install fail. please check compile error info."
+        exit;
+    fi
+
+    psucc "install $lib_name ok."
+}
+
+function install_snappy()
+{
+	lib_name="snappy";
+	check_dir_exist $lib_name;
+
+    # check if aready install.
+    check_lib_exist $lib_name;
+    if [ $? -eq 0 ]; then
+        psucc "$lib_name already installed."
+        return;
+    fi
+    # end check.
+
+    go_back;
+    cd $lib_name;
+	./autogen.sh
+	if [ $? -ne 0 ]; then
+		perror "$lib_name autogen fail. please check compile error info."
+		exit;
+	fi
+
+    ./configure --prefix=$(pwd);
+	if [ $? -ne 0 ]; then
+		perror "$lib_name configure fail. please check compile error info."
+		exit;
+	fi
+
+	make;
+	if [ $? -ne 0 ]; then
+		perror "$lib_name make fail. please check compile error info."
+		exit;
+	fi
+
+	make install;
+	if [ $? -ne 0 ]; then
+		perror "$lib_name make install fail. please check compile error info."
+		exit;
+	fi
+
+    check_lib_exist $lib_name;
+    if [ $? -eq 1 ]; then
+        perror "$lib_name install fail. please check compile error info."
+        exit;
+    fi
+
+    psucc "install $lib_name ok."
+}
+
 function install_leveldb()
 {
     lib_name="leveldb";
@@ -245,6 +353,7 @@ function install_phxrpc()
 
     go_back;
     cd $lib_name;
+	mkdir -p third_party;
     cd third_party;
     rm -rf protobuf;
     ln -s ../../protobuf protobuf;
@@ -259,6 +368,9 @@ function install_phxrpc()
     psucc "install $lib_name ok."
 }
 
+install_cmake;
+install_gflags;
+install_snappy;
 install_leveldb;
 install_protobuf;
 install_glog;

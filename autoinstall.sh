@@ -50,6 +50,7 @@ function install_mysql(){
 }
 
 function process(){
+	$base_dir/third_party/autoinstall.sh
 	create_makefile $base_dir
 	res=`cat $src_dir`
 	echo $res

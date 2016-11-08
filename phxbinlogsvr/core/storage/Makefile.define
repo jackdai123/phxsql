@@ -23,9 +23,9 @@ AGENTSTORAGE_OBJ=storage.o event_index.o storage_file_manager.o event_storage.o 
 
 AGENTSTORAGE_LIB=agentstorage phxbinlogsvr/statistics:phxbinlogstat phxbinlogsvr/proto:phxbinlogproto phxbinlogsvr/config:phxbinlogconfig phxbinlogsvr/core/mysql:gtidhandler phxcomm/log/phxlog:phxlog phxcomm/utils:phxutils
 
-AGENTSTORAGE_SYS_LIB=$(LEVELDB_LIB_PATH)/libleveldb.a
+AGENTSTORAGE_SYS_LIB=$(LEVELDB_LIB_PATH)/libleveldb.a $(SNAPPY_LIB_PATH)/libsnappy.a
 
-AGENTSTORAGE_INCS=$(SRC_BASE_PATH)/phxbinlogsvr/core/storage  $(SRC_BASE_PATH)/phxbinlogsvr/core  $(LEVELDB_INCLUDE_PATH)
+AGENTSTORAGE_INCS=$(SRC_BASE_PATH)/phxbinlogsvr/core/storage  $(SRC_BASE_PATH)/phxbinlogsvr/core  $(LEVELDB_INCLUDE_PATH) $(SNAPPY_INCLUDE_PATH)
 
 AGENTSTORAGE_EXTRA_CPPFLAGS=-Wall -Werror
 
