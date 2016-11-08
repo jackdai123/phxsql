@@ -28,6 +28,7 @@ SET( PHXCLIENTLIB_SRC
 		libphxbinlogsvrclient_phxrpc.a
 		libphxglog.a
 		libglog.a
+		libgflags.a
 		libphxrpc.a
 		libprotobuf.a 
 		pthread
@@ -38,6 +39,7 @@ SET( PHXCLIENTLIB_DIR
 		${BASE_PATH}/third_party/phxrpc/lib
 		${BASE_PATH}/third_party/phxpaxos/lib
 		${BASE_PATH}/third_party/glog/lib 
+		${BASE_PATH}/third_party/gflags/lib 
 		${BASE_PATH}/third_party/protobuf/lib 
 		${BASE_PATH}/third_party/boost/lib 
 		${BASE_PATH}/.lib/extlib
